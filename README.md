@@ -33,7 +33,7 @@ Access the web interface at http://127.0.0.1:5000
 
 ### Testing with MCP Dev Tool
 
-Test the MCP server with the development tool:
+In a separate terminal (flask app must be running), test the MCP server with the development tool:
 ```
 mcp dev mcp_server.py
 ```
