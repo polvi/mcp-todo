@@ -51,13 +51,3 @@ To use with Claude Desktop:
 ```
 mcp install mcp_server.py
 ```
-
-## Todo.txt Format
-
-- Priority is indicated with (A), (B), etc. at the beginning of the task
-- Contexts are indicated with @context
-- Projects are indicated with +project
-
-## License
-
-MIT
