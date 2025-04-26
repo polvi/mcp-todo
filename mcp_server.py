@@ -171,17 +171,6 @@ def debug_info() -> str:
     - Flask App Status: {flask_status}
     - API Status: {api_status}
     - Flask App URL: {FLASK_BASE_URL}
-    - Available resources:
-      * tasks://all
-      * tasks://completed
-      * tasks://filter/{{filter_type}}/{{filter_value}}
-    - Available tools:
-      * add_task(text)
-      * complete_task(task_id)
-      * uncomplete_task(task_id)
-      * delete_task(task_id)
-      * edit_task(task_id, text)
-      * debug_info()
     """
 
 if __name__ == "__main__":
