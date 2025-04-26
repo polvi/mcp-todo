@@ -1,0 +1,4 @@
+.aider*
+.venv
+__pycache__
+*.db

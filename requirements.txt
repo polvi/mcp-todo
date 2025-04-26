@@ -1,3 +1,3 @@
-Flask==2.3.3
-mcp[cli]==0.1.0
-requests==2.31.0
+Flask
+mcp[cli]
+requests
