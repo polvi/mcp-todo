@@ -174,7 +174,7 @@ def filter_tasks():
                           filter_active=True, filter_type=filter_type, filter_value=filter_value)
 
 # API endpoints for MCP server
-@app.route('/api/tasks/all')
+@app.route('/api/tasks/all', methods=['GET'])
 def api_all_tasks():
     """Get all tasks formatted for MCP"""
     conn = get_db_connection()
@@ -191,7 +191,7 @@ def api_all_tasks():
     conn.close()
     return result
 
-@app.route('/api/tasks/completed')
+@app.route('/api/tasks/completed', methods=['GET'])
 def api_completed_tasks():
     """Get completed tasks formatted for MCP"""
     conn = get_db_connection()
@@ -209,7 +209,7 @@ def api_completed_tasks():
     conn.close()
     return result
 
-@app.route('/api/tasks/filter')
+@app.route('/api/tasks/filter', methods=['GET'])
 def api_filter_tasks():
     """Filter tasks by context or project formatted for MCP"""
     filter_type = request.args.get('type')

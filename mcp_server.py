@@ -20,11 +20,15 @@ def get_all_tasks() -> str:
     """Get all tasks from the Flask app"""
     logger.info("Resource requested: tasks://all")
     try:
+        logger.info(f"Sending request to {FLASK_BASE_URL}/api/tasks/all")
         response = requests.get(f"{FLASK_BASE_URL}/api/tasks/all")
+        logger.info(f"Response status: {response.status_code}")
         if response.status_code == 200:
             return response.text
         else:
-            return f"Error: Flask app returned status code {response.status_code}"
+            error_msg = f"Error: Flask app returned status code {response.status_code}"
+            logger.error(f"{error_msg}, Response: {response.text}")
+            return error_msg
     except Exception as e:
         logger.error(f"Error getting all tasks: {str(e)}")
         return f"Error retrieving tasks: {str(e)}"
@@ -148,15 +152,24 @@ def debug_info() -> str:
     logger.info("Debug info requested")
     try:
         # Check if Flask app is running
-        response = requests.get(f"{FLASK_BASE_URL}/api/tasks/all")
-        flask_status = "Online" if response.status_code == 200 else f"Error: {response.status_code}"
+        logger.info(f"Testing connection to Flask app at {FLASK_BASE_URL}")
+        response = requests.get(f"{FLASK_BASE_URL}")
+        flask_status = f"Online (status: {response.status_code})"
+        
+        # Try API endpoint
+        api_response = requests.get(f"{FLASK_BASE_URL}/api/tasks/all")
+        api_status = f"API status: {api_response.status_code}"
+        if api_response.status_code != 200:
+            api_status += f", Response: {api_response.text[:100]}"
     except Exception as e:
         flask_status = f"Offline: {str(e)}"
+        api_status = "Not available"
     
     return f"""
     MCP Server Information:
     - Name: Todo App Proxy
     - Flask App Status: {flask_status}
+    - API Status: {api_status}
     - Flask App URL: {FLASK_BASE_URL}
     - Available resources:
       * tasks://all
