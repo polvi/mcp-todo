@@ -1,6 +1,6 @@
-# Collaborative Todo.txt Flask App
+# Todo.txt Flask App with MCP Integration
 
-A simple Flask application that allows multiple users to collaborate on todo.txt style task lists.
+A simple Flask application for managing todo.txt style task lists with Model Context Protocol (MCP) integration for AI assistants.
 
 ## Features
 
@@ -10,40 +10,53 @@ A simple Flask application that allows multiple users to collaborate on todo.txt
 - Context support (@context)
 - Project support (+project)
 - Filter tasks by context or project
-- Creation and completion dates tracking
-- Simple, responsive UI
+- AI assistant integration via MCP
 
-## Installation
+## Quick Start
+
+### Installation
 
 1. Clone this repository
 2. Install the requirements:
    ```
    pip install -r requirements.txt
+   pip install mcp requests
    ```
-3. Run the application:
-   ```
-   python app.py
-   ```
-4. Open your browser and navigate to `http://127.0.0.1:5000`
+
+### Running the Flask App
+
+Start the Flask web application:
+```
+python app.py
+```
+Access the web interface at http://127.0.0.1:5000
+
+### Running the MCP Server
+
+In a separate terminal, start the MCP server:
+```
+python mcp_server.py
+```
+
+### Testing with MCP Dev Tool
+
+Test the MCP server with the development tool:
+```
+mcp dev mcp_server.py
+```
+
+### Installing in Claude Desktop
+
+To use with Claude Desktop:
+```
+mcp install mcp_server.py
+```
 
 ## Todo.txt Format
 
-This application follows the todo.txt format:
-
-- A single line represents a single task
 - Priority is indicated with (A), (B), etc. at the beginning of the task
 - Contexts are indicated with @context
 - Projects are indicated with +project
-- Creation date is automatically added
-- Completion date is automatically added when a task is marked complete
-
-## Usage
-
-- Click on contexts (@context) or projects (+project) to filter tasks
-- Use the "Add Task" form to create new tasks
-- Use the "Complete" button to mark tasks as done
-- Use the "Edit" button to modify tasks
-- Use the "Delete" button to remove tasks
 
 ## License
 
