@@ -31,12 +31,6 @@ python app.py
 ```
 Access the web interface at http://127.0.0.1:5000
 
-### Running the MCP Server
-
-In a separate terminal, start the MCP server:
-```
-python mcp_server.py
-```
 
 ### Testing with MCP Dev Tool
 
