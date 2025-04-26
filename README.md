@@ -20,7 +20,6 @@ A simple Flask application for managing todo.txt style task lists with Model Con
 2. Install the requirements:
    ```
    pip install -r requirements.txt
-   pip install mcp requests
    ```
 
 ### Running the Flask App
