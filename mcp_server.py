@@ -17,7 +17,7 @@ mcp = FastMCP("Todo App Proxy",
 
 @mcp.resource("tasks://all")
 def get_all_tasks() -> str:
-    """Get all tasks from the Flask app"""
+    """Get all active todo tasks"""
     logger.info("Resource requested: tasks://all")
     try:
         logger.info(f"Sending request to {FLASK_BASE_URL}/api/tasks/all")
@@ -35,7 +35,7 @@ def get_all_tasks() -> str:
 
 @mcp.resource("tasks://completed")
 def get_completed_tasks() -> str:
-    """Get completed tasks from the Flask app"""
+    """Get all completed todo tasks"""
     logger.info("Resource requested: tasks://completed")
     try:
         response = requests.get(f"{FLASK_BASE_URL}/api/tasks/completed")
@@ -49,7 +49,7 @@ def get_completed_tasks() -> str:
 
 @mcp.resource("tasks://filter/{filter_type}/{filter_value}")
 def filter_tasks(filter_type: str, filter_value: str) -> str:
-    """Filter tasks by context or project from the Flask app"""
+    """Filter todo tasks by context (@tag) or project (+project)"""
     logger.info(f"Resource requested: tasks://filter/{filter_type}/{filter_value}")
     try:
         response = requests.get(f"{FLASK_BASE_URL}/api/tasks/filter?type={filter_type}&value={filter_value}")
@@ -63,7 +63,7 @@ def filter_tasks(filter_type: str, filter_value: str) -> str:
 
 @mcp.tool()
 def add_task(text: str, ctx: Context = None) -> str:
-    """Add a new task via the Flask app"""
+    """Add a new task to the todo list"""
     logger.info(f"Adding task: {text}")
     try:
         response = requests.post(f"{FLASK_BASE_URL}/api/task/add", data={"text": text})
@@ -80,7 +80,7 @@ def add_task(text: str, ctx: Context = None) -> str:
 
 @mcp.tool()
 def complete_task(task_id: int, ctx: Context = None) -> str:
-    """Mark a task as complete via the Flask app"""
+    """Mark a todo task as complete"""
     logger.info(f"Completing task: {task_id}")
     try:
         response = requests.post(f"{FLASK_BASE_URL}/api/task/complete/{task_id}")
@@ -97,7 +97,7 @@ def complete_task(task_id: int, ctx: Context = None) -> str:
 
 @mcp.tool()
 def uncomplete_task(task_id: int, ctx: Context = None) -> str:
-    """Mark a task as incomplete via the Flask app"""
+    """Mark a completed todo task as active again"""
     logger.info(f"Uncompleting task: {task_id}")
     try:
         response = requests.post(f"{FLASK_BASE_URL}/api/task/uncomplete/{task_id}")
@@ -114,7 +114,7 @@ def uncomplete_task(task_id: int, ctx: Context = None) -> str:
 
 @mcp.tool()
 def delete_task(task_id: int, ctx: Context = None) -> str:
-    """Delete a task via the Flask app"""
+    """Delete a todo task permanently"""
     logger.info(f"Deleting task: {task_id}")
     try:
         response = requests.post(f"{FLASK_BASE_URL}/api/task/delete/{task_id}")
@@ -131,7 +131,7 @@ def delete_task(task_id: int, ctx: Context = None) -> str:
 
 @mcp.tool()
 def edit_task(task_id: int, text: str, ctx: Context = None) -> str:
-    """Edit a task via the Flask app"""
+    """Edit the text of an existing todo task"""
     logger.info(f"Editing task {task_id} to: {text}")
     try:
         response = requests.post(f"{FLASK_BASE_URL}/api/task/edit/{task_id}", data={"text": text})
@@ -148,7 +148,7 @@ def edit_task(task_id: int, text: str, ctx: Context = None) -> str:
 
 @mcp.tool()
 def debug_info() -> str:
-    """Get debug information about the MCP server"""
+    """Get system status and connection information"""
     logger.info("Debug info requested")
     try:
         # Check if Flask app is running
