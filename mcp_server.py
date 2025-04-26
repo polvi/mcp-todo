@@ -147,6 +147,30 @@ def edit_task(task_id: int, text: str, ctx: Context = None) -> str:
         return error_msg
 
 @mcp.tool()
+def list_tasks(ctx: Context = None) -> str:
+    """List all tasks (both active and completed)"""
+    logger.info("Listing all tasks")
+    try:
+        # Get active tasks
+        active_response = requests.get(f"{FLASK_BASE_URL}/api/tasks/all")
+        active_tasks = active_response.text if active_response.status_code == 200 else "Error retrieving active tasks"
+        
+        # Get completed tasks
+        completed_response = requests.get(f"{FLASK_BASE_URL}/api/tasks/completed")
+        completed_tasks = completed_response.text if completed_response.status_code == 200 else "Error retrieving completed tasks"
+        
+        # Combine the results
+        result = "# All Tasks\n\n"
+        result += active_tasks + "\n"
+        result += completed_tasks
+        
+        return result
+    except Exception as e:
+        error_msg = f"Error listing tasks: {str(e)}"
+        logger.error(error_msg)
+        return error_msg
+
+@mcp.tool()
 def debug_info() -> str:
     """Get system status and connection information"""
     logger.info("Debug info requested")
