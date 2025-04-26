@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Collaborative Todo.txt</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        .priority-A { color: #ff0000; font-weight: bold; }
+        .priority-B { color: #ff9900; font-weight: bold; }
+        .priority-C { color: #ffcc00; font-weight: bold; }
+        .completed { text-decoration: line-through; color: #888; }
+        .context, .project { 
+            display: inline-block;
+            padding: 0.1em 0.5em;
+            margin: 0 0.2em;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        .context { background-color: #e6f7ff; color: #0066cc; }
+        .project { background-color: #e6ffe6; color: #006600; }
+        .task-text { word-break: break-word; }
+    </style>
+</head>
+<body>
+    <div class="container py-4">
+        <header class="pb-3 mb-4 border-bottom">
+            <h1 class="display-5 fw-bold">Collaborative Todo.txt</h1>
+        </header>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ 'success' if category == 'success' else 'danger' }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Make contexts and projects clickable for filtering
+            document.querySelectorAll('.context').forEach(function(element) {
+                element.addEventListener('click', function() {
+                    const context = this.textContent.substring(1); // Remove @ symbol
+                    window.location.href = '/filter?type=context&value=' + context;
+                });
+            });
+            
+            document.querySelectorAll('.project').forEach(function(element) {
+                element.addEventListener('click', function() {
+                    const project = this.textContent.substring(1); // Remove + symbol
+                    window.location.href = '/filter?type=project&value=' + project;
+                });
+            });
+        });
+    </script>
+</body>
+</html>
